@@ -3,7 +3,6 @@ jQuery.fx.interval = 50;
 $(document).ready(function (e) {
     window.fallingID = 0;
     window.strings = [];
-    window.colors = ["#F1E0CE", "#6C2C00", "#E0E0DE", "#DEDFDD"];
 
     getJson();
     window.setInterval(fallingWord, 3000);
@@ -38,8 +37,7 @@ function fallingWord() {
         item.text(text);
         item.css({
             left: random(0, $("#wrapper").width() - 100),
-            fontSize: random(32, 48),
-            color: window.colors[random(0, window.colors.length - 1)]
+            fontSize: random(32, 48)
         });
         item.appendTo($("#wrapper"));
 
