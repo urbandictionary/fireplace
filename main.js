@@ -42,10 +42,12 @@ function CreateObject() {
     if (new_string != undefined) {
         $("#FallingContentWrapper").append("<div class='fallingObject' id='item" + fallingID + "'>" + new_string + "</div>");
         var new_left = getRandomInt(0, windowWidth - 100);
-        $("#item" + fallingID).css("left", new_left);
-        $("#item" + fallingID).css("font-size", getRandomInt(16, 32));
-        $("#item" + fallingID).css("color", window.fontcolor[getRandomInt(0, window.fontcolor.length - 1)]);
-        $("#item" + fallingID).css("top", window.windowHeight);
+        $("#item" + fallingID).css({
+            left: new_left,
+            fontSize: getRandomInt(16, 32),
+            color: window.fontcolor[getRandomInt(0, window.fontcolor.length - 1)],
+            top: window.windowHeight
+        });
         $("#item" + fallingID).animate({
             top: '-50px'
         }, 15000, function () {
