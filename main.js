@@ -1,55 +1,51 @@
-$(document).ready(function (e) {
-    window.windowHeight = $("#FallingContentWrapper").height();
-    window.windowWidth = $("#FallingContentWrapper").width();
-    window.fallingID = 0;
-    window.fallingString = [];
-    window.fontcolor = ["#fff", "#A2E32A", "#2A45E3", "#E0E32A", "#E32AE0", "#FCF5FC", "#F92008", "#08F9F1", "#066360", "#4EE82C"];
+jQuery.fx.interval = 50;
 
-    get_JsonData();
-    window.setInterval(CreateObject, 500);
+$(document).ready(function (e) {
+    window.fallingID = 0;
+    window.strings = [];
+    window.colors = ["#F1E0CE", "#6C2C00", "#E0E0DE", "#DEDFDD"];
+
+    getJson();
+    window.setInterval(fallingWord, 2000);
 
     $('#video').YTPlayer({
-        fitToBackground: true,
-        videoId: '0fYL_qiDYf0'
+        videoId: 'lGNXVhMLw8o',
+        playerVars: {
+            start: 59,
+            mute: true
+        }
     });
 });
 
-$(window).resize(function (e) {
-    window.windowHeight = $("#FallingContentWrapper").height();
-    window.windowWidth = $("#FallingContentWrapper").width() - 100;
-});
-
-function get_JsonData() {
-    var randomAPI = "http://api.urbandictionary.com/v0/random";
-    $.getJSON(randomAPI, {
-        tagmode: "any",
-        format: "json"
-    }).done(function (randomData) {
+function getJson() {
+    $.getJSON("http://api.urbandictionary.com/v0/random").done(function (randomData) {
         for (var i in randomData.list) {
             if (randomData.list[i]["word"] != undefined) {
-                window.fallingString.push(randomData.list[i]["word"]);
+                window.strings.push(randomData.list[i]["word"]);
             }
         }
-    }).fail().always();
+    });
 }
 
-function getRandomInt(min, max) {
+function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function CreateObject() {
-    var new_string = window.fallingString[getRandomInt(0, window.fallingString.length - 1)];
+function fallingWord() {
+    var new_string = window.strings[random(0, window.strings.length - 1)];
     if (new_string != undefined) {
-        $("#FallingContentWrapper").append("<div class='fallingObject' id='item" + fallingID + "'>" + new_string + "</div>");
-        var new_left = getRandomInt(0, windowWidth - 100);
-        $("#item" + fallingID).css({
-            left: new_left,
-            fontSize: getRandomInt(16, 32),
-            color: window.fontcolor[getRandomInt(0, window.fontcolor.length - 1)],
-            top: window.windowHeight
+        var item = $("<div>").attr({class: "fallingObject", id: "item" + fallingID});
+        item.text(new_string);
+        item.css({
+            left: random(0, $("#wrapper").width() - 100),
+            fontSize: random(16, 32),
+            color: window.colors[random(0, window.colors.length - 1)],
+            top: window.$("#wrapper").height()
         });
-        $("#item" + fallingID).animate({
-            top: '-50px'
+
+        $("#wrapper").append(item);
+        item.animate({
+            top: '-0px'
         }, 15000, function () {
             $(this).remove();
         });
