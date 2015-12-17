@@ -3,8 +3,6 @@ jQuery.fx.interval = 50;
 $(document).ready(function (e) {
     window.fallingID = 0;
     window.strings = [];
-
-    getJson();
     window.setInterval(fallingWord, 3000);
 
     $('#video').YTPlayer({
@@ -37,13 +35,13 @@ function fallingWord() {
         item.text(text);
         item.css({
             left: random(0, $("#wrapper").width() - 100),
-            fontSize: random(32, 48),
+            fontSize: random(48, 72),
             opacity: 0
         });
         item.animate({opacity: 0.8}, 5000).appendTo($("#wrapper"));
 
         setTimeout(function () {
-            item.fadeOut(function () {
+            item.fadeOut(5000, function () {
                 item.remove();
             });
         }, 20 * 1000);
