@@ -18,21 +18,10 @@
     }
 
     .fallingObject {
-        -webkit-animation: 20s linear alternate;
-        -webkit-animation-name: move-by-transform;
+        -webkit-animation: move-by-transform 20s ease-in;
         color: #DEDFDD;
         position: absolute;
         top: -50px;
-        opacity: 0.8;
-    }
-
-    @-webkit-keyframes move-by-transform {
-        0% {
-            -webkit-transform: translateY(1000px);
-        }
-        100% {
-            -webkit-transform: translateY(-50px);
-        }
     }
 
     #wrapper {
@@ -46,6 +35,20 @@
         height: 100%;
     }
 </style>
+<script>
+    //<![CDATA[
+    $("<style>").html("\
+        @-webkit-keyframes move-by-transform {\
+            0% {\
+                -webkit-transform: translateY(HEIGHT);\
+            }\
+            100% {\
+                -webkit-transform: translateY(0px);\
+            }\
+        }\
+    ".replace("HEIGHT", $(window).height() + "px")).appendTo("head");
+    //]]>
+</script>
 
 <body>
 

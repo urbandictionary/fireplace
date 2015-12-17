@@ -37,12 +37,15 @@ function fallingWord() {
         item.text(text);
         item.css({
             left: random(0, $("#wrapper").width() - 100),
-            fontSize: random(32, 48)
+            fontSize: random(32, 48),
+            opacity: 0
         });
-        item.appendTo($("#wrapper"));
+        item.animate({opacity: 0.8}, 5000).appendTo($("#wrapper"));
 
         setTimeout(function () {
-            item.remove();
+            item.fadeOut(function () {
+                item.remove();
+            });
         }, 20 * 1000);
     } else {
         getJson();
