@@ -6,7 +6,6 @@ $(document).ready(function (e) {
     window.colors = ["#F1E0CE", "#6C2C00", "#E0E0DE", "#DEDFDD"];
 
     getJson();
-    window.setInterval(fallingWord, 2000);
 
     $('#video').YTPlayer({
         videoId: 'lGNXVhMLw8o',
@@ -24,6 +23,7 @@ function getJson() {
                 window.strings.push(randomData.list[i]["word"]);
             }
         }
+        window.setInterval(fallingWord, 2000);
     });
 }
 
@@ -34,22 +34,13 @@ function random(min, max) {
 function fallingWord() {
     var new_string = window.strings[random(0, window.strings.length - 1)];
     if (new_string != undefined) {
-        var item = $("<div>").attr({class: "fallingObject", id: "item" + fallingID});
+        var item = $("<div>").attr({class: "fallingObject"});
         item.text(new_string);
         item.css({
             left: random(0, $("#wrapper").width() - 100),
             fontSize: random(16, 32),
-            color: window.colors[random(0, window.colors.length - 1)],
-            top: window.$("#wrapper").height()
+            color: window.colors[random(0, window.colors.length - 1)]
         });
-
-        $("#wrapper").append(item);
-        item.animate({
-            top: '-0px'
-        }, 15000, function () {
-            $(this).remove();
-        });
-
-        fallingID++;
+        item.appendTo($("#wrapper"));
     }
 }

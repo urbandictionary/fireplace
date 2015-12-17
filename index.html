@@ -18,10 +18,20 @@
     }
 
     .fallingObject {
+        -webkit-animation: 15s linear alternate;
+        -webkit-animation-name: move-by-transform;
+        color: white;
         position: absolute;
-        color: #0C3;
-        text-shadow: #060;
-        top: -30px;
+        top: -50px;
+    }
+
+    @-webkit-keyframes move-by-transform {
+        0% {
+            -webkit-transform: translateY(1000px);
+        }
+        100% {
+            -webkit-transform: translateY(-50px);
+        }
     }
 
     #wrapper {
