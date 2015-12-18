@@ -1,8 +1,8 @@
-jQuery.fx.interval = 50;
+jQuery.fx.interval = 250;
 
 $(document).ready(function (e) {
     window.queue = [];
-    window.setInterval(fallingWord, 3000);
+    window.setInterval(fallingWord, 2000);
 
     $('#video').YTPlayer({
         videoId: 'lGNXVhMLw8o',
