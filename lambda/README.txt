@@ -1,0 +1,1 @@
+node-lambda deploy -f deploy.env

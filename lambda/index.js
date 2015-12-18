@@ -1,9 +1,8 @@
 var elasticsearch = require('elasticsearch');
 
 exports.handler = function (event, context) {
-    console.log("Running index.handler");
     console.log("==================================");
-    console.log(event, event);
+    console.log(event, process.env);
     console.log("==================================");
 
     var client = new elasticsearch.Client({
