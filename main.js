@@ -15,7 +15,6 @@ $(document).ready(function (e) {
 
 function getJson() {
     $.getJSON("https://eq2ytuibq4.execute-api.us-east-1.amazonaws.com/prod/recent").done(function (response) {
-        console.log(response);
         window.queue = window.queue.concat(response);
     });
 }
@@ -27,11 +26,11 @@ function random(min, max) {
 function fallingWord() {
     var text = window.queue.shift();
     if (text) {
-        var item = $("<div>").attr({class: "fallingObject"});
-        item.text(text.term);
+        var item = $("<div>").attr({class: "falling"});
+        item.append($("<div>").attr({class: "term"}).text(text.term));
+        item.append($("<div>").attr({class: "location"}).text(text.location));
         item.css({
-            left: random(0, $("#wrapper").width() - 100),
-            fontSize: random(48, 72),
+            left: random(0, $("#wrapper").width() - item.width()),
             opacity: 0
         });
         item.animate({opacity: 0.8}, 5000).appendTo($("#wrapper"));
