@@ -1,8 +1,7 @@
 jQuery.fx.interval = 50;
 
 $(document).ready(function (e) {
-    window.fallingID = 0;
-    window.strings = [];
+    window.queue = [];
     window.setInterval(fallingWord, 3000);
 
     $('#video').YTPlayer({
@@ -15,12 +14,9 @@ $(document).ready(function (e) {
 });
 
 function getJson() {
-    $.getJSON("http://api.urbandictionary.com/v0/random").done(function (randomData) {
-        for (var i in randomData.list) {
-            if (randomData.list[i]["word"] != undefined) {
-                window.strings.push(randomData.list[i]["word"]);
-            }
-        }
+    $.getJSON("https://eq2ytuibq4.execute-api.us-east-1.amazonaws.com/prod/recent").done(function (response) {
+        console.log(response);
+        window.queue = window.queue.concat(response);
     });
 }
 
@@ -29,10 +25,10 @@ function random(min, max) {
 }
 
 function fallingWord() {
-    var text = window.strings.shift();
+    var text = window.queue.shift();
     if (text) {
         var item = $("<div>").attr({class: "fallingObject"});
-        item.text(text);
+        item.text(text.term);
         item.css({
             left: random(0, $("#wrapper").width() - 100),
             fontSize: random(48, 72),
