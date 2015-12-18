@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "country-data": "0.0.24",
     "elasticsearch": "^10.0.1",
     "lodash": "^3.10.1"
   }
