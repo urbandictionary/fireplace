@@ -1,0 +1,36 @@
+{
+  "query": {
+    "filtered": {
+      "filter": {
+        "and": [
+          {
+            "term": {
+              "page_urlpath": "/define.php"
+            }
+          },
+          {
+            "range": {
+              "_timestamp": {
+                "gt": "now-24h"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "fields": [
+    "page_url",
+    "geo_country",
+    "geo_region"
+  ],
+  "size": 10,
+  "sort": {
+    "_script": {
+      "script": "Math.random() * 200000",
+      "type": "number",
+      "params": {},
+      "order": "asc"
+    }
+  }
+}

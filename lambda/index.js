@@ -4,10 +4,6 @@ var url = require('url');
 countries = require('country-data').countries;
 
 exports.handler = function (event, context) {
-    console.log("==================================");
-    console.log(event, process.env);
-    console.log("==================================");
-
     var client = new elasticsearch.Client({
         host: process.env.ELASTICSEARCH_URL,
         log: 'trace'
@@ -16,12 +12,7 @@ exports.handler = function (event, context) {
     client.search({
         index: "snowplow",
         type: "hit",
-        body: {
-            query: {filtered: {filter: {term: {page_urlpath: "/define.php"}}}},
-            fields: ["page_url", "geo_country", "geo_region"],
-            size: 10,
-            sort: [{_timestamp: {order: "desc"}}]
-        }
+        body: require('./query.json')
     }).then(function (results) {
         function mapping(fields) {
             var country = fields.geo_country[0];
@@ -31,10 +22,11 @@ exports.handler = function (event, context) {
         }
 
         var json = _(results.hits.hits).pluck("fields").map(mapping).value();
-
         console.log(json);
+
         context.succeed(json);
     }, function (error) {
+        console.log(error);
         context.fail(error);
     });
 };
